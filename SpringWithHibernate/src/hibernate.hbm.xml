@@ -1,0 +1,92 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+<class name="com.bean.EtlSourceBean"  table="ETL_SOURCE_SYSTEM" >
+<id name="source_system_id" column="Source_System_Id"/>
+<property name="source_system_name" column="Source_System_Name"/>
+<property name="source_system_desc" column="Source_System_Desc"/>
+<property name="source_name" column="Source_Name"/>
+<property name="source_type" column="Source_Type"/>
+</class>
+
+<class name="com.bean.EtlAuditBean"  table="ETL_AUDIT" >
+<id name="SourceLoadkey" column="SOURCE_LOAD_KEY"/>
+<property name="SourceSystemId" column="SOURCE_SYSTEM_ID"/>
+<property name="JobName" column="JOB_NAME"/>
+<property name="LoadStatusFlag" column="LOAD_STATUS_FLAG"/>
+</class>
+
+<class name="com.bean.ETLAuditExtractLoadBean"  table="ETL_AUDIT_EXTRACT_LOAD" >
+<id name="EtlLoadKey" column="ETL_LOAD_KEY"/>
+<property name="ExtractionDateTime" column="EXTRACTION_DATE_TIME"/>
+<property name="SessionName" column="SESSION_NAME"/>
+<property name="LoadStartDateTime" column="LOAD_START_DATE_TIME"/>
+<property name="LoadStopDateTime" column="LOAD_STOP_DATE_TIME"/>
+<property name="NoOfExtractionRecords" column="NO_EXTRACTION_RECORDS"/>
+<property name="NoOfReturnRecords" column="NO_RETURN_RECORDS"/>
+<property name="SourceSystemId" column="SOURCE_SYSTEM_ID"/>
+</class>
+
+<class name="com.bean.SelectAllBean"  table="COMBINEDTABLE">
+
+<id name="SourceLoadkey" column="SOURCE_LOAD_KEY"/>
+<property name="SourceSystemId" column="SOURCE_SYSTEM_ID"/>
+<property name="JobName" column="JOB_NAME"/>
+<property name="LoadStatusFlag" column="LOAD_STATUS_FLAG"/>
+<property name="EtlLoadKey" column="ETL_LOAD_KEY"/>
+<property name="ExtractionDateTime" column="EXTRACTION_DATE_TIME"/>
+<property name="SessionName" column="SESSION_NAME"/>
+<property name="LoadStartDateTime" column="LOAD_START_DATE_TIME"/>
+<property name="LoadStopDateTime" column="LOAD_STOP_DATE_TIME"/>
+<property name="NoOfExtractionRecords" column="NO_EXTRACTION_RECORDS"/>
+<property name="NoOfReturnRecords" column="NO_RETURN_RECORDS"/>
+
+</class>
+
+<sql-query name="etlSourceSystemInsert">
+{call ETLSOURCESYSTEMINSERT(:source_system_name,:source_system_desc,:source_name,:source_type)}
+</sql-query>
+
+<sql-query name="etlSourceSelectAll" callable="true" > 
+ <return class="com.bean.EtlSourceBean" />
+ {call ETLSOURCESYSTEM_SELECTALL(?)} 
+</sql-query>
+     
+<sql-query name="etlSourceDelete">
+{call ETLSOURCESYSTEM_DELETE(:source_system_id)}
+</sql-query>
+
+<sql-query name="etlSourceUpdate">
+{call ETLSOURCESYSTEM_UPDATE(:source_system_id,:source_system_name,:source_system_desc,:source_name,:source_type)}
+</sql-query>
+
+<sql-query name="etlSourceSelectById" callable="true">
+<return class="com.bean.EtlSourceBean" />
+{call ETLSOURCESYSTEM_SELECTBYID(?,:source_system_id)}
+</sql-query>
+
+<sql-query name="selectAllData" callable="true">
+<!--  <return class="com.bean.EtlAuditBean"></return>
+<return class="com.bean.ETLAuditExtractLoadBean"></return>-->
+<return class="com.bean.SelectAllBean"/>
+{call SELECTMULTIPLETABLES(?,:SourceName)}
+</sql-query>
+
+<sql-query name="selectTwo" callable="true">
+<!--  <return class="com.bean.EtlAuditBean"></return>
+<return class="com.bean.ETLAuditExtractLoadBean"></return>-->
+<return class="com.bean.SelectAllBean"/>
+{call SELECTTWOTABLES(?,:SourceName)}
+</sql-query>
+
+<sql-query name="selectEtlData" callable="true">
+<return class="com.bean.EtlAuditBean"></return>
+{call ETL_AUDIT_SELECT(?,:SourceName)}
+</sql-query>
+
+<sql-query name="selectEtlAuditExtractData" callable="true">
+<return class="com.bean.ETLAuditExtractLoadBean"></return>
+{call SELECTETLAUDITEXTRACTLOAD(?,:SourceName)}
+</sql-query>
+</hibernate-mapping>
