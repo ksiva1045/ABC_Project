@@ -164,6 +164,9 @@ public class EtlSourceDaoImpl implements EtlSourceDao{
 	public List listEtlAuditAll(String name) {
 		// TODO Auto-generated method stub
 		System.out.println("dao:"+name);
+		System.out.println("dao:"+name);
+		
+		System.out.println("dao:"+name);
 		SourceAllBean sourceAllBean=new SourceAllBean();
 		
         Session session=sessionFactory.getCurrentSession();
