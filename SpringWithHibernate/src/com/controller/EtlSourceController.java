@@ -23,6 +23,7 @@ public class EtlSourceController {
 	
 	@Autowired
 	private EtlSourceService etlSourceService;
+	private SelectAllBean s;
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addContact(@ModelAttribute("etlSourceBean")EtlSourceBean etlSourceBean, BindingResult result) {
@@ -48,7 +49,7 @@ public class EtlSourceController {
 	 @RequestMapping(value="/delete", method=RequestMethod.POST)
 	 public String removeEtlSource(@ModelAttribute("checkBoxBean") CheckBoxBean checkBoxBean){
 	    
-		 List checkList = checkBoxBean.getCheckval();
+		 List<CheckBoxBean> checkList = checkBoxBean.getCheckval();
 		 System.out.println("Delete"+checkList);
 		 
 	        etlSourceService.removeEtlSource(checkList);
@@ -100,7 +101,7 @@ public class EtlSourceController {
 	    public String SelectBySourceName(@ModelAttribute("sourceAllBean")SourceAllBean sourceAllBean,Map<String, Object> map) {
 		 String name=sourceAllBean.getSourcename();
 		 System.out.println(name+"name");
-		 SelectAllBean s=null;
+		 s = null;
 		 System.out.println("source name:"+sourceAllBean.getSourcename());
 	        //map.put("etlAuditBean", new EtlAuditBean());
 	        //map.put("etlAuditExtractLoad",new ETLAuditExtractLoadBean());
