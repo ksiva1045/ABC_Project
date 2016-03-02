@@ -10,7 +10,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +44,7 @@ public class EtlSourceDaoImpl implements EtlSourceDao{
 
 
 	@Override
-	public List listEtlSource() 
+	public List<?> listEtlSource() 
 	{
 		Session session=sessionFactory.getCurrentSession();
 		
@@ -58,7 +58,7 @@ public class EtlSourceDaoImpl implements EtlSourceDao{
 		
 		Session session=sessionFactory.getCurrentSession();
 		
-		Iterator itr = checkList.iterator();
+		Iterator<?> itr = checkList.iterator();
 		 System.out.println("Delete"+checkList);
 		 
 		while(itr.hasNext())
@@ -104,8 +104,8 @@ public class EtlSourceDaoImpl implements EtlSourceDao{
 		Session session = sessionFactory.getCurrentSession();
 		
 		
-		ArrayList list =(ArrayList) session.getNamedQuery("etlSourceSelectById").setString("source_system_id",etl_source_id).list();
-		Iterator itr = list.iterator();
+		ArrayList<?> list =(ArrayList<?>) session.getNamedQuery("etlSourceSelectById").setString("source_system_id",etl_source_id).list();
+		Iterator<?> itr = list.iterator();
 		EtlSourceBean bean=null;
 		while(itr.hasNext()){
 			 bean = (EtlSourceBean) itr.next();
@@ -138,7 +138,7 @@ public class EtlSourceDaoImpl implements EtlSourceDao{
 
 
 	@Override
-	public List getSourceType() {
+	public List<?> getSourceType() {
 		// TODO Auto-generated method stub
 		try{
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -161,7 +161,7 @@ public class EtlSourceDaoImpl implements EtlSourceDao{
 
 	@Override
 	@Transactional
-	public List listEtlAuditAll(String name) {
+	public List<?> listEtlAuditAll(String name) {
 		// TODO Auto-generated method stub
 		System.out.println("dao:"+name);
 		System.out.println("dao:"+name);
@@ -176,9 +176,9 @@ public class EtlSourceDaoImpl implements EtlSourceDao{
 		EtlAuditBean etlauditbean=null;
 		ETLAuditExtractLoadBean etlauditextractbean=null;
 		
-		List l=session.getNamedQuery("selectTwo").setString("SourceName",name).list();
+		List<?> l=session.getNamedQuery("selectTwo").setString("SourceName",name).list();
 		
-		Iterator itr = l.iterator();
+		Iterator<?> itr = l.iterator();
 		SelectAllBean bean=null;
 		
 		while(itr.hasNext()){
