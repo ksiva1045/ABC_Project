@@ -8,24 +8,24 @@ import javax.persistence.Table;
 
 
 
-/*@Entity
-@Table(name="ETL_SOURCE_SYSTEM",schema="dream_erp")*/
+@Entity
+@Table(name="ETL_SOURCE_SYSTEM",schema="dream_erp")
 public class EtlSourceBean {
 	
-	/*@Id
-    @Column(name="Source_System_Id")*/
+	@Id
+    @Column(name="Source_System_Id")
 	private String source_system_id;
 	
-	//@Column(name="Source_System_Name")
+	@Column(name="Source_System_Name")
 	private String source_system_name;
 	
-	//@Column(name="Source_System_Desc")
+	@Column(name="Source_System_Desc")
 	private String source_system_desc;
 	
-	//@Column(name="Source_Name")
+	@Column(name="Source_Name")
 	private String source_name;
 	
-	//@Column(name="Source_Type")
+	@Column(name="Source_Type")
 	private String source_type;
 	
 	
